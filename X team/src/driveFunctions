@@ -1,0 +1,182 @@
+void stop()
+{
+	motorSet(1,0);
+	motorSet(2,0);
+	motorSet(3,0);
+	motorSet(4,0);
+	motorSet(5,0);
+	motorSet(6,0);
+	motorSet(7,0);
+	motorSet(8,0);
+	motorSet(9,0);
+	motorSet(10,0);
+
+}
+
+void driveForward(double turns,int speed)
+{
+	encoderReset(rightE);
+	encoderReset(leftE);
+	double distance = turns * 360;
+	
+	int right = 0;  
+	int left = 0;
+	
+	while(right < distance && left < distance)
+	{
+	 motorSet(1,speed);
+	 motorSet(2,-speed);
+	 motorSet(6,-speed);
+	 motorSet(10,-speed);
+	 right = encoderGet(rightE);
+	 left = encoderGet(leftE);
+	}
+	
+	encoderReset(rightE);
+	encoderReset(leftE);
+	stop();
+
+}
+
+void driveBackwards(double turns,int speed)
+{
+
+	encoderReset(rightE);
+	encoderReset(leftE);
+	double distance = turns * 360 * -1;
+	
+	int right = 0;  
+	int left = 0;
+	
+	while(right > distance && left > distance)
+	{
+	 motorSet(1,-speed);
+	 motorSet(2,speed);
+	 motorSet(6,speed);
+	 motorSet(10,speed);
+	 right = encoderGet(rightE);
+	 left = encoderGet(leftE);
+	}
+	
+	encoderReset(rightE);
+	encoderReset(leftE);
+	stop();
+
+}
+
+void turnRight(double degree,int speed)
+{
+	gyroReset(gDog);
+	encoderReset(rightE);
+	encoderReset(leftE);
+	//double distance = turns * 360;
+	
+	//int right = 0;  
+	//int left = 0;
+	int dg = 0;
+	
+	while(dg > -degree)
+	{
+	 motorSet(1,-speed);
+	 motorSet(2,speed);
+	 motorSet(6,-speed);
+	 motorSet(10,-speed);
+	// right = encoderGet(rightE);
+	// left = encoderGet(leftE);
+	 dg = gyroGet(gDog);
+	}
+	encoderReset(rightE);
+	encoderReset(leftE);
+	gyroReset(gDog);
+	stop();
+	
+}
+
+void turnLeft(double degree,int speed)
+{
+
+	encoderReset(rightE);
+	encoderReset(leftE);
+	gyroReset(gDog);
+	
+	
+	
+	int dg = 0;
+	
+	while(dg < degree)
+	{
+	 motorSet(1,-speed);
+	 motorSet(2,speed);
+	 motorSet(6,-speed);
+	 motorSet(10,-speed);
+	 dg = gyroGet(gDog);
+	}
+	
+	
+	encoderReset(rightE);
+	encoderReset(leftE);
+	gyroReset(gDog);
+	stop();
+
+}
+
+void liftArm(double Atime, int speed){
+
+		
+	double time = Atime * 1000;
+
+			motorSet(7, -speed);
+			motorSet(9, speed);
+			motorSet(3, speed);
+			motorSet(5, -speed);
+	wait(time);
+	stop();
+
+
+
+}
+
+void lowerArm(double Atime, int speed){
+
+double time = Atime * 1000;
+
+			motorSet(7, speed);
+			motorSet(9, -speed);
+			motorSet(3, -speed);
+			motorSet(5, speed);
+	wait(time);
+	stop();
+
+}
+
+void putCubeOnPole(double Atime){
+
+	int time = Atime * 1000;
+
+	motorSet(4, -127);
+	motorSet(8, 127);
+	wait(time);
+	motorSet(4, 0);
+	motorSet(8, 0);
+}
+
+
+void turnRightOnly(double Atime,int speed)
+{
+	int time = Atime * 1000;
+	gyroReset(gDog);
+	encoderReset(rightE);
+	encoderReset(leftE);
+
+
+	
+
+	 motorSet(6,-speed);
+	 motorSet(10,-speed);
+	wait(time);
+	encoderReset(rightE);
+	encoderReset(leftE);
+	gyroReset(gDog);
+	stop();
+	
+}
